@@ -48,6 +48,19 @@ public class EditActivity extends AppCompatActivity {
 
         objSqLiteDatabase.delete(ManageTABLE.TABLE_USER, ManageTABLE.COLUMN_ID + "=" + intID, null);
 
+        //new update
+
+        nameUserString = nameUserEditText.getText().toString().trim();
+        historyString = historyEditText.getText().toString().trim();
+        usedString = usedEditText.getText().toString().trim();
+        allergiesString = allergiesEditText.getText().toString().trim();
+        resistanceString = resistanceEditText.getText().toString().trim();
+        myDrugString = myDrugEditText.getText().toString().trim();
+
+
+        ManageTABLE objManageTABLE = new ManageTABLE(this);
+        objManageTABLE.addNewValue(nameUserString, historyString, usedString, allergiesString, resistanceString, myDrugString, alertString);
+
     } // clickSave
 
     public void clickInforEdit(View view) {
