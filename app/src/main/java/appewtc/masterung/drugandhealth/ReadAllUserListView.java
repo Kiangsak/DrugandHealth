@@ -5,6 +5,7 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
@@ -93,14 +94,22 @@ public class ReadAllUserListView extends ListActivity{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent objIntent = new Intent(ReadAllUserListView.this, EditActivity.class);
-                objIntent.putExtra("User", strUser );
-                objIntent.putExtra("History", strHistory );
-                objIntent.putExtra("Used",strUsed );
-                objIntent.putExtra("Allergies",strAllergies );
-                objIntent.putExtra("Resistance", strResistance );
-                objIntent.putExtra("Drug", strMyDrug );
-                objIntent.putExtra("Alert", strAlert );
+                objIntent.putExtra("User", strUser);
+                objIntent.putExtra("History", strHistory);
+                objIntent.putExtra("Used", strUsed);
+                objIntent.putExtra("Allergies", strAllergies);
+                objIntent.putExtra("Resistance", strResistance);
+                objIntent.putExtra("Drug", strMyDrug);
+                objIntent.putExtra("Alert", strAlert);
                 startActivity(objIntent);
+
+            }
+        });
+        objBuilder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                deleteMyData(strUser);
 
             }
         });
@@ -109,4 +118,23 @@ public class ReadAllUserListView extends ListActivity{
         objBuilder.show();
 
     }//show alert
+
+    private void deleteMyData(String strUser) {
+
+
+
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME, MODE_PRIVATE, null);
+
+        //Delete
+        Cursor deleteCursor = objSqLiteDatabase.rawQuery("SELECT * FROM userTABLE WHERE User = " + "'" + strUser + "'" , null);
+        deleteCursor.moveToFirst();
+        String strID = deleteCursor.getString(deleteCursor.getColumnIndex(ManageTABLE.COLUMN_ID));
+        int intID = Integer.parseInt(strID);
+
+
+        objSqLiteDatabase.delete(ManageTABLE.TABLE_USER, ManageTABLE.COLUMN_ID + "=" + intID, null);
+
+        createListView();
+
+    }
 }   // Main Class

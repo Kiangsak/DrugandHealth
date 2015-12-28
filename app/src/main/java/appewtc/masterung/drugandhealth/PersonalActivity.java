@@ -131,6 +131,9 @@ public class PersonalActivity extends AppCompatActivity {
 
             testAlarm(minAlarmAnInt);   // Test ==> minAlarmAnInt Real alertAnInt * 60
 
+            Intent objIntent = new Intent(PersonalActivity.this, MainActivity.class);
+            startActivity(objIntent);
+
 
 
 
