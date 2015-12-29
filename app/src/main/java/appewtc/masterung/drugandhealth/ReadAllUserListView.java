@@ -115,6 +115,7 @@ public class ReadAllUserListView extends ListActivity{
         });
 
 
+
         objBuilder.show();
 
     }//show alert
